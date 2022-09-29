@@ -6,7 +6,7 @@ Sample application to develop Phoenix applications in Gitpod.
 
 ## What's in the box?
 
-1. Dockerfile based upon `gitpod/workspace-full``
+1. Dockerfile based upon `gitpod/workspace-full`.
 2. PostgreSQL 14
 3. Compiles ElixirLS extension with the current Erlang/Elixir version to properly autocomplete when using the `use` macro. The extension is installed using a task in `.vscode/tasks.json`. Currently there is no other way to do this until you can define extensions via a local file path in `.gitpod.yml`.
 
