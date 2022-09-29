@@ -2,8 +2,7 @@ import Config
 
 # Configure your database
 config :gitpod, Gitpod.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "gitpod",
   hostname: "localhost",
   database: "gitpod_dev",
   stacktrace: true,

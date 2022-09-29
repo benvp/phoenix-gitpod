@@ -1,19 +1,18 @@
-# Gitpod
+# Phoenix application in Gitpod
 
-To start your Phoenix server:
+Sample application to develop Phoenix applications in Gitpod.
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#<your-repository-url>)
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+## What's in the box?
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+1. Dockerfile based upon `gitpod/workspace-full``
+2. PostgreSQL 14
+3. Compiles ElixirLS extension with the current Erlang/Elixir version to properly autocomplete when using the `use` macro. The extension is installed using a task in `.vscode/tasks.json`. Currently there is no other way to do this until you can define extensions via a local file path in `.gitpod.yml`.
 
-## Learn more
+## Files to look at
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+1. `.gitpod.yml`
+2. `.gitpod.Dockerfile`
+3. `gitpod/install_extensions.sh`
+4. `.vscode/tasks.json`
