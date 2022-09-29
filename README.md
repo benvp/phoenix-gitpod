@@ -1,8 +1,8 @@
 # Phoenix application in Gitpod
 
-Sample application to develop Phoenix applications in Gitpod.
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/benvp/phoenix-gitpod)
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#<your-repository-url>)
+Sample application to develop Phoenix applications in Gitpod.
 
 ## What's in the box?
 
