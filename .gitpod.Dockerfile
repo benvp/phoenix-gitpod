@@ -66,7 +66,7 @@ RUN brew install asdf \
 # This causes issues when developing locally because it would always install the wrong extension.
 
 RUN bash -c ". $(brew --prefix asdf)/libexec/asdf.sh \
-    && git clone --recursive --branch v0.11.0 https://github.com/elixir-lsp/vscode-elixir-ls.git /tmp/vscode-elixir-ls \
+    && git clone --recursive --branch v0.12.0 https://github.com/elixir-lsp/vscode-elixir-ls.git /tmp/vscode-elixir-ls \
     && cd /tmp/vscode-elixir-ls \
     && npm install \
     && cd elixir-ls \
@@ -74,7 +74,7 @@ RUN bash -c ". $(brew --prefix asdf)/libexec/asdf.sh \
     && cd .. \
     && npx vsce package \
     && mkdir -p $HOME/extensions \
-    && cp /tmp/vscode-elixir-ls/elixir-ls-0.11.0.vsix $HOME/extensions \
+    && cp /tmp/vscode-elixir-ls/elixir-ls-0.12.0.vsix $HOME/extensions \
     && cd $HOME \
     && rm -rf /tmp/vscode-elixir-ls"
 
