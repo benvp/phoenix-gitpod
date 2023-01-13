@@ -1,9 +1,5 @@
 FROM gitpod/workspace-full
 
-# install dev tools
-RUN brew install fzf \
-    && $(brew --prefix)/opt/fzf/install --completion --key-bindings --no-fish
-
 ENV PGWORKSPACE="/workspace/.pgsql"
 ENV PGDATA="$PGWORKSPACE/data"
 
