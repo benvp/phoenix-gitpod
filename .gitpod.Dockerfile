@@ -45,12 +45,12 @@ RUN brew install asdf \
     && asdf plugin add erlang \
     && asdf plugin add elixir \
     && asdf plugin add nodejs \
-    && asdf install erlang 25.1 \
-    && asdf global erlang 25.1 \
-    && asdf install elixir 1.14.0-otp-25 \
-    && asdf global elixir 1.14.0-otp-25 \
-    && asdf install nodejs 16.17.1 \
-    && asdf global nodejs 16.17.1 \
+    && asdf install erlang 25.2 \
+    && asdf global erlang 25.2 \
+    && asdf install elixir 1.14.2-otp-25 \
+    && asdf global elixir 1.14.2-otp-25 \
+    && asdf install nodejs 18.13.0 \
+    && asdf global nodejs 18.13.0 \
     && bash -c ". $(brew --prefix asdf)/libexec/asdf.sh \
         && mix local.hex --force \
         && mix local.rebar --force" \
@@ -66,7 +66,7 @@ RUN brew install asdf \
 # This causes issues when developing locally because it would always install the wrong extension.
 
 RUN bash -c ". $(brew --prefix asdf)/libexec/asdf.sh \
-    && git clone --recursive --branch v0.12.0 https://github.com/elixir-lsp/vscode-elixir-ls.git /tmp/vscode-elixir-ls \
+    && git clone --recursive --branch v0.13.0 https://github.com/elixir-lsp/vscode-elixir-ls.git /tmp/vscode-elixir-ls \
     && cd /tmp/vscode-elixir-ls \
     && npm install \
     && cd elixir-ls \
@@ -74,7 +74,7 @@ RUN bash -c ". $(brew --prefix asdf)/libexec/asdf.sh \
     && cd .. \
     && npx vsce package \
     && mkdir -p $HOME/extensions \
-    && cp /tmp/vscode-elixir-ls/elixir-ls-0.12.0.vsix $HOME/extensions \
+    && cp /tmp/vscode-elixir-ls/elixir-ls-0.13.0.vsix $HOME/extensions \
     && cd $HOME \
     && rm -rf /tmp/vscode-elixir-ls"
 

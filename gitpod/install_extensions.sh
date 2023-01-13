@@ -4,7 +4,7 @@
 # This is a workaround until https://github.com/gitpod-io/gitpod/issues/12791
 # is fixed.
 
-ELIXIR_LS_VERSION=0.12.0
+ELIXIR_LS_VERSION=0.13.0
 
 if test $USER = "gitpod"
 then
