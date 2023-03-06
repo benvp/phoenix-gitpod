@@ -7,13 +7,13 @@ RUN sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release 
     && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - \
     && sudo apt -y update
 
-# Install PostgreSQL 14
+# Install PostgreSQL 15
 # If you are fine with an older version, you can skip the PostgreSQL block
 # and just use FROM gitpod/workspace-postgres as base image.
-RUN sudo install-packages postgresql-14 postgresql-contrib-14
+RUN sudo install-packages postgresql-15 postgresql-contrib-15
 
 # Setup PostgreSQL server for user gitpod
-ENV PATH="/usr/lib/postgresql/14/bin:$PATH"
+ENV PATH="/usr/lib/postgresql/15/bin:$PATH"
 
 SHELL ["/usr/bin/bash", "-c"]
 RUN PGDATA="${PGDATA//\/workspace/$HOME}" \
@@ -41,12 +41,12 @@ RUN brew install asdf \
     && asdf plugin add erlang \
     && asdf plugin add elixir \
     && asdf plugin add nodejs \
-    && asdf install erlang 25.2 \
-    && asdf global erlang 25.2 \
-    && asdf install elixir 1.14.2-otp-25 \
-    && asdf global elixir 1.14.2-otp-25 \
-    && asdf install nodejs 18.13.0 \
-    && asdf global nodejs 18.13.0 \
+    && asdf install erlang 25.2.3 \
+    && asdf global erlang 25.2.3 \
+    && asdf install elixir 1.14.3-otp-25 \
+    && asdf global elixir 1.14.3-otp-25 \
+    && asdf install nodejs 19.7.0 \
+    && asdf global nodejs 19.7.0 \
     && bash -c ". $(brew --prefix asdf)/libexec/asdf.sh \
         && mix local.hex --force \
         && mix local.rebar --force" \

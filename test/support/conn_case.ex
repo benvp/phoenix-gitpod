@@ -19,15 +19,15 @@ defmodule GitpodWeb.ConnCase do
 
   using do
     quote do
+      # The default endpoint for testing
+      @endpoint GitpodWeb.Endpoint
+
+      use GitpodWeb, :verified_routes
+
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
       import GitpodWeb.ConnCase
-
-      alias GitpodWeb.Router.Helpers, as: Routes
-
-      # The default endpoint for testing
-      @endpoint GitpodWeb.Endpoint
     end
   end
 

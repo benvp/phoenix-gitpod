@@ -8,12 +8,14 @@ defmodule Gitpod.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Start the Ecto repository
-      Gitpod.Repo,
       # Start the Telemetry supervisor
       GitpodWeb.Telemetry,
+      # Start the Ecto repository
+      Gitpod.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: Gitpod.PubSub},
+      # Start Finch
+      {Finch, name: Gitpod.Finch},
       # Start the Endpoint (http/https)
       GitpodWeb.Endpoint
       # Start a worker by calling: Gitpod.Worker.start_link(arg)
