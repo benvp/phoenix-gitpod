@@ -17,14 +17,17 @@ config :gitpod, Gitpod.Repo,
 # you can enable the server option below.
 config :gitpod, GitpodWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "kfSL0pRNLIqemnKzJNIFWigHRGj2VRtdkfOH7MOmfaLxHJ5nyk7PPujhMojgKFKy",
+  secret_key_base: "KDvdVzrz6nrAfztOWANgIN43Z3dcGdOHETknwqalBLUKq+Z8tsuEf+xjhRPjrfSC",
   server: false
 
 # In test we don't send emails.
 config :gitpod, Gitpod.Mailer, adapter: Swoosh.Adapters.Test
 
+# Disable swoosh api client as it is only required for production adapters.
+config :swoosh, :api_client, false
+
 # Print only warnings and errors during test
-config :logger, level: :warn
+config :logger, level: :warning
 
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime

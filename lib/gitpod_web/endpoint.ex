@@ -7,7 +7,8 @@ defmodule GitpodWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_gitpod_key",
-    signing_salt: "SX5g7X0m"
+    signing_salt: "cMp4mbf4",
+    same_site: "Lax"
   ]
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
@@ -20,7 +21,7 @@ defmodule GitpodWeb.Endpoint do
     at: "/",
     from: :gitpod,
     gzip: false,
-    only: ~w(assets fonts images favicon.ico robots.txt)
+    only: GitpodWeb.static_paths()
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
