@@ -2,4 +2,91 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+@import "../vendor/shoelace/css/light";
+@import "../vendor/shoelace/css/dark";
+
 /* This file is for your main application CSS */
+/* Overide Shoelace default color */
+:root {
+	/* Changes the primary theme color to Tailwindcss blue */
+	--sl-color-primary-50: #eff6ff;
+	--sl-color-primary-100: #dbeafe;
+	--sl-color-primary-200: #bfdbfe;
+	--sl-color-primary-300: #93c5fd;
+	--sl-color-primary-400: #60a5fa;
+	--sl-color-primary-500: #3b82f6;
+	--sl-color-primary-600: #2563eb;
+	--sl-color-primary-700: #1d4ed8;
+	--sl-color-primary-800: #1e40af;
+	--sl-color-primary-900: #1e3a8a;
+
+	/* Changes the success theme color to Tailwindcss green */
+	--sl-color-success-50: #f0fdf4;
+	--sl-color-success-100: #dcfce7;
+	--sl-color-success-200: #bbf7d0;
+	--sl-color-success-300: #86efac;
+	--sl-color-success-400: #4ade80;
+	--sl-color-success-500: #22c55e;
+	--sl-color-success-600: #16a34a;
+	--sl-color-success-700: #15803d;
+	--sl-color-success-800: #166534;
+	--sl-color-success-900: #14532d;
+
+	/* Changes the warning theme color to Tailwindcss yellow */
+	--sl-color-warning-50: #fefce8;
+	--sl-color-warning-100: #fef9c3;
+	--sl-color-warning-200: #fef08a;
+	--sl-color-warning-300: #fde047;
+	--sl-color-warning-400: #facc15;
+	--sl-color-warning-500: #eab308;
+	--sl-color-warning-600: #ca8a04;
+	--sl-color-warning-700: #a16207;
+	--sl-color-warning-800: #854d0e;
+	--sl-color-warning-900: #713f12;
+
+	/* Changes the danger theme color to Tailwindcss red */
+	--sl-color-danger-50: #fef2f2;
+	--sl-color-danger-100: #fee2e2;
+	--sl-color-danger-200: #fecaca;
+	--sl-color-danger-300: #fca5a5;
+	--sl-color-danger-400: #f87171;
+	--sl-color-danger-500: #ef4444;
+	--sl-color-danger-600: #dc2626;
+	--sl-color-danger-700: #b91c1c;
+	--sl-color-danger-800: #991b1b;
+	--sl-color-danger-900: #7f1d1d;
+
+	/* Changes the neutral theme color to Tailwindcss slate */
+	--sl-color-neutral-50: #f8fafc;
+	--sl-color-neutral-100: #f1f5f9;
+	--sl-color-neutral-200: #e2e8f0;
+	--sl-color-neutral-300: #cbd5e1;
+	--sl-color-neutral-400: #94a3b8;
+	--sl-color-neutral-500: #64748b;
+	--sl-color-neutral-600: #475569;
+	--sl-color-neutral-700: #334155;
+	--sl-color-neutral-800: #1e293b;
+	--sl-color-neutral-900: #0f172a;
+}
+
+/* Badges */
+sl-badge[variant="primary"]::part(base) {
+	background-color: var(--sl-color-primary-100);
+	color: var(--sl-color-primary-800);
+}
+sl-badge[variant="success"]::part(base) {
+	background-color: var(--sl-color-success-100);
+	color: var(--sl-color-success-800);
+}
+sl-badge[variant="warning"]::part(base) {
+	background-color: var(--sl-color-warning-100);
+	color: var(--sl-color-warning-800);
+}
+sl-badge[variant="danger"]::part(base) {
+	background-color: var(--sl-color-danger-100);
+	color: var(--sl-color-danger-800);
+}
+sl-badge[variant="neutral"]::part(base) {
+	background-color: var(--sl-color-neutral-100);
+	color: var(--sl-color-neutral-800);
+}

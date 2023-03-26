@@ -1,0 +1,13 @@
+{
+	"dependencies": {
+		"@shoelace-style/shoelace": "^2.3.0"
+	},
+	"devDependencies": {
+		"copyfiles": "^2.4.1"
+	},
+	"scripts": {
+		"shoelace:prepare": "mkdir -p vendor/shoelace && npm run shoelace:copy-assets && npm run shoelace:copy-styles",
+		"shoelace:copy-assets": "cp -r node_modules/@shoelace-style/shoelace/dist/assets vendor/shoelace/assets",
+		"shoelace:copy-styles": "copyfiles --flat node_modules/@shoelace-style/shoelace/dist/themes/*.css vendor/shoelace/css"
+	}
+}

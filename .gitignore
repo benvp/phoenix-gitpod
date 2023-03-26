@@ -35,3 +35,6 @@ gitpod-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# Shoelace webcomponents
+/assets/vendor/shoelace/
+
