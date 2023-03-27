@@ -26,6 +26,10 @@ import topbar from "../vendor/topbar";
 import "@shoelace-style/shoelace/dist/components/rating/rating.js";
 import "@shoelace-style/shoelace/dist/components/button/button.js";
 import "@shoelace-style/shoelace/dist/components/badge/badge.js";
+import "@shoelace-style/shoelace/dist/components/tag/tag.js";
+import "@shoelace-style/shoelace/dist/components/button/button.js";
+import "@shoelace-style/shoelace/dist/components/checkbox/checkbox.js";
+import "@shoelace-style/shoelace/dist/components/input/input.js";
 import { setBasePath } from "@shoelace-style/shoelace/dist/utilities/base-path.js";
 
 // Set the base path to the folder you copied Shoelace's assets to
@@ -80,4 +84,4 @@ if (window.matchMedia) {
 	colorSchemeQuery.addEventListener("change", updateColorScheme);
 }
 
-// updateColorScheme();
+updateColorScheme();

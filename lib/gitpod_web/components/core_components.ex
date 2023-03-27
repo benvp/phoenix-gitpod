@@ -53,7 +53,11 @@ defmodule GitpodWeb.CoreComponents do
       phx-remove={hide_modal(@id)}
       class="relative z-50 hidden"
     >
-      <div id={"#{@id}-bg"} class="fixed inset-0 bg-zinc-50/90 transition-opacity" aria-hidden="true" />
+      <div
+        id={"#{@id}-bg"}
+        class="fixed inset-0 transition-opacity bg-gray-500/75"
+        aria-hidden="true"
+      />
       <div
         class="fixed inset-0 overflow-y-auto"
         aria-labelledby={"#{@id}-title"}
@@ -62,7 +66,7 @@ defmodule GitpodWeb.CoreComponents do
         aria-modal="true"
         tabindex="0"
       >
-        <div class="flex min-h-full items-center justify-center">
+        <div class="flex items-center justify-center min-h-full">
           <div class="w-full max-w-3xl p-4 sm:p-6 lg:py-8">
             <.focus_wrap
               id={"#{@id}-container"}
@@ -70,46 +74,46 @@ defmodule GitpodWeb.CoreComponents do
               phx-window-keydown={hide_modal(@on_cancel, @id)}
               phx-key="escape"
               phx-click-away={hide_modal(@on_cancel, @id)}
-              class="hidden relative rounded-2xl bg-white p-14 shadow-lg shadow-zinc-700/10 ring-1 ring-zinc-700/10 transition"
+              class="relative hidden transition bg-white rounded-lg shadow-xl p-14 shadow-gray-700/10 ring-1 ring-gray-700/10"
             >
               <div class="absolute top-6 right-5">
                 <button
                   phx-click={hide_modal(@on_cancel, @id)}
                   type="button"
-                  class="-m-3 flex-none p-3 opacity-20 hover:opacity-40"
+                  class="flex-none p-3 -m-3 text-gray-400 bg-white rounded-md hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
                   aria-label={gettext("close")}
                 >
-                  <Heroicons.x_mark solid class="h-5 w-5 stroke-current" />
+                  <Heroicons.x_mark solid class="w-5 h-5 stroke-current" />
                 </button>
               </div>
               <div id={"#{@id}-content"}>
                 <header :if={@title != []}>
-                  <h1 id={"#{@id}-title"} class="text-lg font-semibold leading-8 text-zinc-800">
+                  <h1 id={"#{@id}-title"} class="text-lg font-medium leading-8 text-gray-900">
                     <%= render_slot(@title) %>
                   </h1>
                   <p
                     :if={@subtitle != []}
                     id={"#{@id}-description"}
-                    class="mt-2 text-sm leading-6 text-zinc-600"
+                    class="mt-2 text-sm leading-6 text-gray-600"
                   >
                     <%= render_slot(@subtitle) %>
                   </p>
                 </header>
                 <%= render_slot(@inner_block) %>
-                <div :if={@confirm != [] or @cancel != []} class="ml-6 mb-4 flex items-center gap-5">
+                <div :if={@confirm != [] or @cancel != []} class="flex items-center gap-5 mb-4 ml-6">
                   <.button
                     :for={confirm <- @confirm}
                     id={"#{@id}-confirm"}
                     phx-click={@on_confirm}
                     phx-disable-with
-                    class="py-2 px-3"
+                    class="px-3 py-2"
                   >
                     <%= render_slot(confirm) %>
                   </.button>
                   <.link
                     :for={cancel <- @cancel}
                     phx-click={hide_modal(@on_cancel, @id)}
-                    class="text-sm font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
+                    class="text-sm font-semibold leading-6 text-gray-900 hover:text-gray-700"
                   >
                     <%= render_slot(cancel) %>
                   </.link>
@@ -157,18 +161,18 @@ defmodule GitpodWeb.CoreComponents do
       {@rest}
     >
       <p :if={@title} class="flex items-center gap-1.5 text-[0.8125rem] font-semibold leading-6">
-        <Heroicons.information_circle :if={@kind == :info} mini class="h-4 w-4" />
-        <Heroicons.exclamation_circle :if={@kind == :error} mini class="h-4 w-4" />
+        <Heroicons.information_circle :if={@kind == :info} mini class="w-4 h-4" />
+        <Heroicons.exclamation_circle :if={@kind == :error} mini class="w-4 h-4" />
         <%= @title %>
       </p>
       <p class="mt-2 text-[0.8125rem] leading-5"><%= msg %></p>
       <button
         :if={@close}
         type="button"
-        class="group absolute top-2 right-1 p-2"
+        class="absolute p-2 group top-2 right-1"
         aria-label={gettext("close")}
       >
-        <Heroicons.x_mark solid class="h-5 w-5 stroke-current opacity-40 group-hover:opacity-70" />
+        <Heroicons.x_mark solid class="w-5 h-5 stroke-current opacity-40 group-hover:opacity-70" />
       </button>
     </div>
     """
@@ -196,7 +200,7 @@ defmodule GitpodWeb.CoreComponents do
       phx-disconnected={show("#disconnected")}
       phx-connected={hide("#disconnected")}
     >
-      Attempting to reconnect <Heroicons.arrow_path class="ml-1 w-3 h-3 inline animate-spin" />
+      Attempting to reconnect <Heroicons.arrow_path class="inline w-3 h-3 ml-1 animate-spin" />
     </.flash>
     """
   end
@@ -227,9 +231,9 @@ defmodule GitpodWeb.CoreComponents do
   def simple_form(assigns) do
     ~H"""
     <.form :let={f} for={@for} as={@as} {@rest}>
-      <div class="space-y-8 bg-white mt-10">
+      <div class="mt-10 space-y-8 bg-white">
         <%= render_slot(@inner_block, f) %>
-        <div :for={action <- @actions} class="mt-2 flex items-center justify-between gap-6">
+        <div :for={action <- @actions} class="flex items-center justify-between gap-6 mt-2">
           <%= render_slot(action, f) %>
         </div>
       </div>
@@ -341,7 +345,7 @@ defmodule GitpodWeb.CoreComponents do
       <select
         id={@id}
         name={@name}
-        class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-zinc-500 focus:border-zinc-500 sm:text-sm"
+        class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-zinc-500 focus:border-zinc-500 sm:text-sm"
         multiple={@multiple}
         {@rest}
       >
@@ -418,7 +422,7 @@ defmodule GitpodWeb.CoreComponents do
 
   def error(assigns) do
     ~H"""
-    <p class="phx-no-feedback:hidden mt-3 flex gap-3 text-sm leading-6 text-rose-600">
+    <p class="flex gap-3 mt-3 text-sm leading-6 phx-no-feedback:hidden text-rose-600">
       <Heroicons.exclamation_circle mini class="mt-0.5 h-5 w-5 flex-none fill-rose-500" />
       <%= render_slot(@inner_block) %>
     </p>
@@ -482,7 +486,7 @@ defmodule GitpodWeb.CoreComponents do
       end
 
     ~H"""
-    <div class="overflow-y-auto px-4 sm:overflow-visible sm:px-0">
+    <div class="px-4 overflow-y-auto sm:overflow-visible sm:px-0">
       <table class="mt-11 w-[40rem] sm:w-full">
         <thead class="text-left text-[0.8125rem] leading-6 text-zinc-500">
           <tr>
@@ -493,7 +497,7 @@ defmodule GitpodWeb.CoreComponents do
         <tbody
           id={@id}
           phx-update={match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"}
-          class="relative divide-y divide-zinc-100 border-t border-zinc-200 text-sm leading-6 text-zinc-700"
+          class="relative text-sm leading-6 border-t divide-y divide-zinc-100 border-zinc-200 text-zinc-700"
         >
           <tr :for={row <- @rows} id={@row_id && @row_id.(row)} class="group hover:bg-zinc-50">
             <td
@@ -502,15 +506,15 @@ defmodule GitpodWeb.CoreComponents do
               class={["relative p-0", @row_click && "hover:cursor-pointer"]}
             >
               <div class="block py-4 pr-6">
-                <span class="absolute -inset-y-px right-0 -left-4 group-hover:bg-zinc-50 sm:rounded-l-xl" />
+                <span class="absolute right-0 -inset-y-px -left-4 group-hover:bg-zinc-50 sm:rounded-l-xl" />
                 <span class={["relative", i == 0 && "font-semibold text-zinc-900"]}>
                   <%= render_slot(col, @row_item.(row)) %>
                 </span>
               </div>
             </td>
             <td :if={@action != []} class="relative p-0 w-14">
-              <div class="relative whitespace-nowrap py-4 text-right text-sm font-medium">
-                <span class="absolute -inset-y-px -right-4 left-0 group-hover:bg-zinc-50 sm:rounded-r-xl" />
+              <div class="relative py-4 text-sm font-medium text-right whitespace-nowrap">
+                <span class="absolute left-0 -inset-y-px -right-4 group-hover:bg-zinc-50 sm:rounded-r-xl" />
                 <span
                   :for={action <- @action}
                   class="relative ml-4 font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
@@ -570,7 +574,7 @@ defmodule GitpodWeb.CoreComponents do
         navigate={@navigate}
         class="text-sm font-semibold leading-6 text-zinc-900 hover:text-zinc-700"
       >
-        <Heroicons.arrow_left solid class="w-3 h-3 stroke-current inline" />
+        <Heroicons.arrow_left solid class="inline w-3 h-3 stroke-current" />
         <%= render_slot(@inner_block) %>
       </.link>
     </div>

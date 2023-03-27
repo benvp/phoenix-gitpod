@@ -7,7 +7,10 @@
 
 /* This file is for your main application CSS */
 /* Overide Shoelace default color */
-:root {
+:root,
+:host,
+.sl-theme-light {
+	color-scheme: light;
 	/* Changes the primary theme color to Tailwindcss blue */
 	--sl-color-primary-50: #eff6ff;
 	--sl-color-primary-100: #dbeafe;
