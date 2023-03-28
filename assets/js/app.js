@@ -22,6 +22,10 @@ import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
 
+import Alpine from "alpinejs";
+window.Alpine = Alpine;
+Alpine.start();
+
 // Shoelace Web Components
 import "@shoelace-style/shoelace/dist/components/rating/rating.js";
 import "@shoelace-style/shoelace/dist/components/button/button.js";
@@ -30,13 +34,24 @@ import "@shoelace-style/shoelace/dist/components/tag/tag.js";
 import "@shoelace-style/shoelace/dist/components/button/button.js";
 import "@shoelace-style/shoelace/dist/components/checkbox/checkbox.js";
 import "@shoelace-style/shoelace/dist/components/input/input.js";
+import "@shoelace-style/shoelace/dist/components/dialog/dialog.js";
 import { setBasePath } from "@shoelace-style/shoelace/dist/utilities/base-path.js";
 
 // Set the base path to the folder you copied Shoelace's assets to
 setBasePath("../vendor/shoelace/assets");
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
-let liveSocket = new LiveSocket("/live", Socket, { params: { _csrf_token: csrfToken } });
+let liveSocket = new LiveSocket("/live", Socket, {
+	dom: {
+		// make LiveView work nicely with AlpineJS
+		onBeforeElUpdated(from, to) {
+			if (from._x_dataStack) {
+				window.Alpine.clone(from, to);
+			}
+		},
+	},
+	params: { _csrf_token: csrfToken },
+});
 
 // Show progress bar on live navigation and form submits
 topbar.config({ barColors: { 0: "#29d" }, shadowColor: "rgba(0, 0, 0, .3)" });
