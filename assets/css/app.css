@@ -70,6 +70,10 @@
 	--sl-color-neutral-700: #334155;
 	--sl-color-neutral-800: #1e293b;
 	--sl-color-neutral-900: #0f172a;
+
+	/* Dialog */
+	--sl-overlay-background-color: hsl(215 16% 47% / 75%);
+	/* --sl-overlay-background-color: hsl(240 3.8% 46.1% / 73%); */
 }
 
 /* Badges */
@@ -93,3 +97,9 @@ sl-badge[variant="neutral"]::part(base) {
 	background-color: var(--sl-color-neutral-100);
 	color: var(--sl-color-neutral-800);
 }
+
+/* dialog */
+/* sl-dialog::part(overlay) {
+	background-color: var(--sl-color-neutral-500);
+	@apply bg-opacity-75;
+} */
