@@ -13,6 +13,7 @@ defmodule GitpodWeb.CoreComponents do
 
   alias Phoenix.LiveView.JS
   import GitpodWeb.Gettext
+  import Phoenix.HTML, only: [html_escape: 1]
 
   @doc """
   Renders a modal.
@@ -240,6 +241,137 @@ defmodule GitpodWeb.CoreComponents do
     </.form>
     """
   end
+
+  @doc """
+  Renders an input with label and error messages.
+
+  A `%Phoenix.HTML.Form{}` and field name may be passed to the input
+  to build input names and error messages, or all the attributes and
+  errors may be passed explicitly.
+
+  ## Examples
+
+      <.input field={@form[:email]} type="email" />
+      <.input name="my-input" errors={["oh no!"]} />
+  """
+  attr :id, :any, default: nil
+  attr :name, :any
+  attr :label, :string, default: nil
+  attr :value, :any
+  attr :help_text, :string, default: nil
+
+  attr :type, :string,
+    default: "text",
+    values: ~w(checkbox color date datetime-local email file hidden month number password
+               range radio search select tel text textarea time url week)
+
+  attr :field, Phoenix.HTML.FormField,
+    doc: "a form field struct retrieved from the form, for example: @form[:email]"
+
+  attr :errors, :list, default: []
+  attr :checked, :boolean, doc: "the checked flag for checkbox inputs"
+  attr :indeterminate, :boolean, doc: "the indeterminate flag for checkbox inputs"
+  attr :prompt, :string, default: nil, doc: "the prompt for select inputs"
+  attr :options, :list, doc: "the options to pass to Phoenix.HTML.Form.options_for_select/2"
+  attr :multiple, :boolean, default: false, doc: "the multiple flag for select inputs"
+  attr :rest, :global, include: ~w(autocomplete cols disabled form max maxlength min minlength
+                                   pattern placeholder readonly required rows size step)
+  slot :inner_block
+
+  def sl_input(%{field: %Phoenix.HTML.FormField{} = field} = assigns) do
+    assigns
+    |> assign(field: nil, id: assigns.id || field.id)
+    |> assign(:errors, Enum.map(field.errors, &translate_error(&1)))
+    |> assign_new(:name, fn -> if assigns.multiple, do: field.name <> "[]", else: field.name end)
+    |> assign_new(:value, fn -> field.value end)
+    |> input()
+  end
+
+  def sl_input(%{type: "checkbox", value: value} = assigns) do
+    assigns =
+      assign_new(assigns, :checked, fn -> Phoenix.HTML.Form.normalize_value("checkbox", value) end)
+
+    ~H"""
+    <div phx-feedback-for={@name}>
+      <sl-checkbox value="true" name={@name} checked={@checked} indeterminate={@indeterminate} {@rest}>
+        <%= @label %>
+      </sl-checkbox>
+      <.error :for={msg <- @errors}><%= msg %></.error>
+    </div>
+    """
+  end
+
+  def sl_input(%{type: "select"} = assigns) do
+    ~H"""
+    <div phx-feedback-for={@name}>
+      <.label for={@id}><%= @label %></.label>
+      <select
+        id={@id}
+        name={@name}
+        class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-zinc-500 focus:border-zinc-500 sm:text-sm"
+        multiple={@multiple}
+        {@rest}
+      >
+        <option :if={@prompt} value=""><%= @prompt %></option>
+        <%= Phoenix.HTML.Form.options_for_select(@options, @value) %>
+      </select>
+      <sl-select label={@label} help-text={@help_text}>
+        <sl-option :if={@prompt} value=""><%= @prompt %></sl-option>
+        <sl-option value="option-1">Option 1</sl-option>
+        <sl-option value="option-2">Option 2</sl-option>
+        <sl-option value="option-3">Option 3</sl-option>
+        <sl-option value="option-4">Option 4</sl-option>
+        <sl-option value="option-5">Option 5</sl-option>
+        <sl-option value="option-6">Option 6</sl-option>
+      </sl-select>
+      <.error :for={msg <- @errors}><%= msg %></.error>
+    </div>
+    """
+  end
+
+  # def input(%{type: "textarea"} = assigns) do
+  #   ~H"""
+  #   <div phx-feedback-for={@name}>
+  #     <.label for={@id}><%= @label %></.label>
+  #     <textarea
+  #       id={@id || @name}
+  #       name={@name}
+  #       class={[
+  #         "mt-2 block min-h-[6rem] w-full rounded-lg border-zinc-300 py-[7px] px-[11px]",
+  #         "text-zinc-900 focus:border-zinc-400 focus:outline-none focus:ring-4 focus:ring-zinc-800/5 sm:text-sm sm:leading-6",
+  #         "phx-no-feedback:border-zinc-300 phx-no-feedback:focus:border-zinc-400 phx-no-feedback:focus:ring-zinc-800/5",
+  #         "border-zinc-300 focus:border-zinc-400 focus:ring-zinc-800/5",
+  #         @errors != [] && "border-rose-400 focus:border-rose-400 focus:ring-rose-400/10"
+  #       ]}
+  #       {@rest}
+  #     ><%= Phoenix.HTML.Form.normalize_value("textarea", @value) %></textarea>
+  #     <.error :for={msg <- @errors}><%= msg %></.error>
+  #   </div>
+  #   """
+  # end
+
+  # def input(assigns) do
+  #   ~H"""
+  #   <div phx-feedback-for={@name}>
+  #     <.label for={@id}><%= @label %></.label>
+  #     <input
+  #       type={@type}
+  #       name={@name}
+  #       id={@id || @name}
+  #       value={Phoenix.HTML.Form.normalize_value(@type, @value)}
+  #       class={[
+  #         "mt-2 block w-full rounded-lg border-zinc-300 py-[7px] px-[11px]",
+  #         "text-zinc-900 focus:outline-none focus:ring-4 sm:text-sm sm:leading-6",
+  #         "phx-no-feedback:border-zinc-300 phx-no-feedback:focus:border-zinc-400 phx-no-feedback:focus:ring-zinc-800/5",
+  #         "border-zinc-300 focus:border-zinc-400 focus:ring-zinc-800/5",
+  #         @errors != [] && "border-rose-400 focus:border-rose-400 focus:ring-rose-400/10"
+  #       ]}
+  #       {@rest}
+  #     />
+  #     <.error :for={msg <- @errors}><%= msg %></.error>
+  #   </div>
+  #   """
+  # end
 
   @doc """
   Renders a button.
@@ -661,5 +793,78 @@ defmodule GitpodWeb.CoreComponents do
   """
   def translate_errors(errors, field) when is_list(errors) do
     for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
+  end
+
+  @doc """
+  Returns options to be used inside a Shoelace sl_select.
+
+  This is useful when building the select by hand.
+  It expects all options and one or more select values.
+
+  ## Examples
+
+      options_for_sl_select(["Admin": "admin", "User": "user"], "admin")
+      #=> <sl-option value="admin" selected="selected">Admin</sl-option>
+      #=> <sl-option value="user">User</sl-option>
+
+  Groups are also supported:
+
+      options_for_sl_select(["Europe": ["UK", "Sweden", "France"], ...], nil)
+      #=> <small>Europe</small>
+      #=>   <sl-option>UK</sl-option>
+      #=>   <sl-option>Sweden</sl-option>
+      #=>   <sl-option>France</sl-option>
+
+  """
+  def options_for_sl_select(options, selected_values) do
+    {:safe,
+     escaped_options_for_sl_select(
+       options,
+       selected_values |> List.wrap() |> Enum.map(&html_escape/1)
+     )}
+  end
+
+  defp escaped_options_for_sl_select(options, selected_values) do
+    Enum.reduce(options, [], fn
+      {option_key, option_value}, acc ->
+        [acc | sl_option(option_key, option_value, [], selected_values)]
+
+      options, acc when is_list(options) ->
+        {option_key, options} = Keyword.pop(options, :key)
+
+        option_key ||
+          raise ArgumentError,
+                "expected :key key when building <option> from keyword list: #{inspect(options)}"
+
+        {option_value, options} = Keyword.pop(options, :value)
+
+        option_value ||
+          raise ArgumentError,
+                "expected :value key when building <option> from keyword list: #{inspect(options)}"
+
+        [acc | sl_option(option_key, option_value, options, selected_values)]
+
+      option, acc ->
+        [acc | sl_option(option, option, [], selected_values)]
+    end)
+  end
+
+  defp sl_option(group_label, group_values, [], value)
+       when is_list(group_values) or is_map(group_values) do
+    section_options = escaped_options_for_sl_select(group_values, value)
+    "<small>#{group_label}</small>#{section_options}"
+    # sl_option_tag("optgroup", [label: group_label], {:safe, section_options})
+  end
+
+  defp sl_option(option_key, option_value, extra, value) do
+    option_key = html_escape(option_key)
+    option_value = html_escape(option_value)
+    attrs = extra ++ [selected: option_value in value, value: option_value]
+    sl_option_tag("sl-option", attrs, option_key)
+  end
+
+  defp sl_option_tag(name, attrs, {:safe, body}) when is_binary(name) and is_list(attrs) do
+    {:safe, attrs} = Phoenix.HTML.attributes_escape(attrs)
+    [?<, name, attrs, ?>, body, ?<, ?/, name, ?>]
   end
 end
