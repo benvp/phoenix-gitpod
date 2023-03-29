@@ -21,10 +21,8 @@ import "phoenix_html";
 import { Socket } from "phoenix";
 import { LiveSocket } from "phoenix_live_view";
 import topbar from "../vendor/topbar";
-
-import Alpine from "alpinejs";
-window.Alpine = Alpine;
-Alpine.start();
+import { getHooks } from "live_svelte";
+import * as SvelteComponents from "../svelte/**/*";
 
 // Shoelace Web Components
 import "@shoelace-style/shoelace/dist/components/rating/rating.js";
@@ -42,14 +40,7 @@ setBasePath("../vendor/shoelace/assets");
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
 let liveSocket = new LiveSocket("/live", Socket, {
-	dom: {
-		// make LiveView work nicely with AlpineJS
-		onBeforeElUpdated(from, to) {
-			if (from._x_dataStack) {
-				window.Alpine.clone(from, to);
-			}
-		},
-	},
+	hooks: getHooks(SvelteComponents),
 	params: { _csrf_token: csrfToken },
 });
 
@@ -68,35 +59,35 @@ liveSocket.connect();
 window.liveSocket = liveSocket;
 
 // Light/Dark themes
-function setColorScheme(scheme) {
-	switch (scheme) {
-		case "dark":
-			document.documentElement.classList.add("sl-theme-dark");
-			break;
-		case "light":
-			document.documentElement.classList.remove("sl-theme-dark");
-			break;
-		default:
-			document.documentElement.classList.remove("sl-theme-dark");
-			break;
-	}
-}
-function getPreferredColorScheme() {
-	if (window.matchMedia) {
-		if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-			return "dark";
-		} else {
-			return "light";
-		}
-	}
-	return "light";
-}
-function updateColorScheme() {
-	setColorScheme(getPreferredColorScheme());
-}
-if (window.matchMedia) {
-	var colorSchemeQuery = window.matchMedia("(prefers-color-scheme: dark)");
-	colorSchemeQuery.addEventListener("change", updateColorScheme);
-}
+// function setColorScheme(scheme) {
+// 	switch (scheme) {
+// 		case "dark":
+// 			document.documentElement.classList.add("sl-theme-dark");
+// 			break;
+// 		case "light":
+// 			document.documentElement.classList.remove("sl-theme-dark");
+// 			break;
+// 		default:
+// 			document.documentElement.classList.remove("sl-theme-dark");
+// 			break;
+// 	}
+// }
+// function getPreferredColorScheme() {
+// 	if (window.matchMedia) {
+// 		if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+// 			return "dark";
+// 		} else {
+// 			return "light";
+// 		}
+// 	}
+// 	return "light";
+// }
+// function updateColorScheme() {
+// 	setColorScheme(getPreferredColorScheme());
+// }
+// if (window.matchMedia) {
+// 	var colorSchemeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+// 	colorSchemeQuery.addEventListener("change", updateColorScheme);
+// }
 
-updateColorScheme();
+// updateColorScheme();

@@ -1,14 +1,22 @@
 {
 	"dependencies": {
 		"@shoelace-style/shoelace": "^2.3.0",
-		"alpinejs": "^3.12.0"
+		"live_svelte": "file:../deps/live_svelte",
+		"phoenix": "file:../deps/phoenix",
+		"phoenix_html": "file:../deps/phoenix_html",
+		"phoenix_live_view": "file:../deps/phoenix_live_view"
 	},
 	"devDependencies": {
-		"copyfiles": "^2.4.1"
+		"copyfiles": "^2.4.1",
+		"esbuild": "^0.16.17",
+		"esbuild-plugin-copy": "^2.1.1",
+		"esbuild-plugin-import-glob": "^0.1.1",
+		"esbuild-svelte": "^0.7.3",
+		"svelte": "^3.57.0",
+		"svelte-preprocess": "^5.0.3"
 	},
 	"scripts": {
-		"shoelace:prepare": "mkdir -p vendor/shoelace && npm run shoelace:copy-assets && npm run shoelace:copy-styles",
-		"shoelace:copy-assets": "cp -r node_modules/@shoelace-style/shoelace/dist/assets vendor/shoelace/assets",
+		"shoelace:prepare": "mkdir -p vendor/shoelace && npm run shoelace:copy-styles",
 		"shoelace:copy-styles": "copyfiles --flat node_modules/@shoelace-style/shoelace/dist/themes/*.css vendor/shoelace/css"
 	}
 }
