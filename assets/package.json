@@ -13,10 +13,7 @@
 		"esbuild-plugin-import-glob": "^0.1.1",
 		"esbuild-svelte": "^0.7.3",
 		"svelte": "^3.57.0",
+		"svelte-headlessui": "^0.0.15",
 		"svelte-preprocess": "^5.0.3"
-	},
-	"scripts": {
-		"shoelace:prepare": "mkdir -p vendor/shoelace && npm run shoelace:copy-styles",
-		"shoelace:copy-styles": "copyfiles --flat node_modules/@shoelace-style/shoelace/dist/themes/*.css vendor/shoelace/css"
 	}
 }

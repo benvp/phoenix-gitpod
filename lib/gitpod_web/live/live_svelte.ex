@@ -4,6 +4,9 @@ defmodule GitpodWeb.SvelteLive do
   def render(assigns) do
     ~H"""
     <LiveSvelte.render name="Example" props={%{number: @number}} />
+    <LiveSvelte.render name="Shoelace" ssr={false} />
+    <.input name="check" type="checkbox" value="true" />
+    <.sl_input name="check" type="checkbox" value="true" indeterminate />
     """
   end
 
